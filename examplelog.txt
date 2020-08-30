@@ -1,0 +1,5 @@
+10 km
+26.2 mi
+100 -3.5
+1000 m 5
+whoops, this is the wrong format
