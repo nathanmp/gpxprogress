@@ -30,18 +30,15 @@ Easiest to explain it by example.
 
 ~~~
 Original position: 115.56016W, 51.161267N
-Data point 1 of 5, Distance traveled: 10000.0
+Data point 1 of 4, Distance traveled: 6.21 mi
 Position at data point 1: 115.483235W, 51.093321N
 
-Data point 2 of 5, Distance traveled: 52164.708
+Data point 2 of 4, Distance traveled: 32.41 mi
 Position at data point 2: 115.325098W, 50.808387N
 
-Data point 3 of 5, Distance traveled: 98145.85085714285
+Data point 3 of 4, Distance traveled: 60.99 mi
 Position at data point 3: 115.002885W, 50.521405N
 
-Data point 4 of 5, Distance traveled: 100145.85085714285
-Position at data point 4: 115.002885W, 50.521405N
-
-Current Data Point 5 of 5, Distance traveled: 100145.85085714285
-Current position: 115.002885W, 50.521405N
+Data point 4 of 4, Distance traveled: 64.09 mi
+Position at data point 4: 114.936357W, 50.441678N
 ~~~
