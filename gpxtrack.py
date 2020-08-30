@@ -4,13 +4,13 @@ import argparse
 
 def format_lat(lat):
     if lat < 0:
-        return str(abs(lat)) + "S"
-    return str(abs(lat)) + "N"
+        return "{:5f}S".format(abs(lat))
+    return "{:5f}N".format(abs(lat))
 
 def format_lon(lon):
     if lon < 0:
-        return str(abs(lon)) + "W"
-    return str(abs(lon)) + "E"
+        return "{:5f}W".format(abs(lon))
+    return "{:5f}E".format(abs(lon))
 
 def is_float(s):
     try:
@@ -122,22 +122,46 @@ for i in fr:
 
 coords = [[format_lon(pts[0].point.longitude), format_lat(pts[0].point.latitude)]]
 traveled = 0
-ct = 1
+ct = 0
 
 for d in dists:
     while d > traveled:
     	##keep going
         ct += 1
         traveled = pts[ct].distance_from_start
-    coords.append([format_lon(pts[ct].point.longitude), format_lat(pts[ct].point.latitude), d/1609.34])
+
+    segstartpt = pts[ct-1].point
+    startdist = pts[ct-1].distance_from_start
+
+    segendpt = pts[ct].point
+    enddist = pts[ct].distance_from_start
+
+    longdiff = segendpt.longitude - segstartpt.longitude
+    latdiff = segendpt.latitude - segstartpt.latitude
+
+    extradist = d - startdist
+    diffdist = enddist - startdist
+
+    extralon = longdiff * (extradist / diffdist)
+    extralat = latdiff * (extradist / diffdist)
+
+    # print(startdist)
+    # print(d)
+    # print(enddist)
+    # print("")
+
+    coords.append([[format_lon(segstartpt.longitude + extralon), format_lat(segstartpt.latitude + extralat)], d/1609.34])
+
+for c in coords:
+    print(c)
 
 print("")
 print("Original position: {}, {}".format(coords[0][0], coords[0][1]))
 
 lc = len(coords)
 for i in range(1, lc):
-    print("Data point {} of {}, Distance traveled: {:.2f} mi".format(i, lc-1, coords[i][2]))
-    print("Position at data point {}: {}, {}".format(i, coords[i][0], coords[i][1]))
+    print("Data point {} of {}, Distance traveled: {:.2f} mi".format(i, lc-1, coords[i][1]))
+    print("Position at data point {}: {}, {}".format(i, coords[i][0][0], coords[i][0][1]))
     print("")
 
 # print("Current Data Point {} of {}, Distance traveled: {}".format(lc-1, lc-1, coords[i][2]))
