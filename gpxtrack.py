@@ -1,16 +1,7 @@
 import gpxpy
 import gpxpy.gpx
 import argparse
-
-def format_lat(lat):
-    if lat < 0:
-        return "{:5f}S".format(abs(lat))
-    return "{:5f}N".format(abs(lat))
-
-def format_lon(lon):
-    if lon < 0:
-        return "{:5f}W".format(abs(lon))
-    return "{:5f}E".format(abs(lon))
+from coordinates import Coordinates
 
 def is_float(s):
     try:
@@ -120,7 +111,7 @@ for i in fr:
     s += dist
     dists.append(s)
 
-coords = [[format_lon(pts[0].point.longitude), format_lat(pts[0].point.latitude)]]
+coords = [ [Coordinates(pts[0].point.latitude, pts[0].point.longitude), 0] ]
 traveled = 0
 ct = 0
 
@@ -150,18 +141,16 @@ for d in dists:
     # print(enddist)
     # print("")
 
-    coords.append([[format_lon(segstartpt.longitude + extralon), format_lat(segstartpt.latitude + extralat)], d/1609.34])
-
-for c in coords:
-    print(c)
+    coords.append([Coordinates(segstartpt.latitude + extralat, segstartpt.longitude + extralon), d/1609.34])
 
 print("")
-print("Original position: {}, {}".format(coords[0][0], coords[0][1]))
+print("Original position: {}".format(coords[0][0]))
+print("")
 
 lc = len(coords)
 for i in range(1, lc):
     print("Data point {} of {}, Distance traveled: {:.2f} mi".format(i, lc-1, coords[i][1]))
-    print("Position at data point {}: {}, {}".format(i, coords[i][0][0], coords[i][0][1]))
+    print("Position at data point {}: {}".format(i, str(coords[i][0])))
     print("")
 
 # print("Current Data Point {} of {}, Distance traveled: {}".format(lc-1, lc-1, coords[i][2]))
