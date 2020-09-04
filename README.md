@@ -18,11 +18,7 @@ https://www.outdooractive.com/en/route/mountain-biking/alberta/tour-divide-route
 This currently has to be a newline-separated list of workouts, with up to three space-separated arguments each:
 - Distance traveled. Required.
 - Units the distance is measured in. Optional. Assumed to be miles if empty.
-- A number to modify the distance. Optional.
-
-If it's a positive number, the distance is multiplied by it.
-If it's a negative number, the distance is divided by its absolute value.
-
+- A number to multiply the distance by. Optional.
 ## Output
 
 Easiest to explain it by example.
