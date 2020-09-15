@@ -14,14 +14,17 @@ def is_float(s):
 
 parser = argparse.ArgumentParser(description='Choose GPX file.')
 
-parser.add_argument("gpx", nargs="?", action='store', type=argparse.FileType('r'))
-parser.add_argument("infile", nargs="?", action='store', type=str)
+parser.add_argument("gpx", nargs=1, action='store', type=str)
+parser.add_argument("infile", nargs=1, action='store', type=str)
 parser.add_argument("--add", action='store', nargs="?", default=0, dest='wolen')
 
 args = parser.parse_args()
+print(args.gpx)
 
-gpxd = gpxpy.parse(args.gpx)
-args.gpx.close()
+f = open(args.gpx[0], "r")
+
+gpxd = gpxpy.parse(f)
+f.close()
 gpx = gpxd
 
 pts = gpx.get_points_data()
@@ -29,11 +32,11 @@ pts = gpx.get_points_data()
 s = 0
 
 if args.wolen != 0:
-    f = open(args.infile, 'a')
+    f = open(args.infile[0], 'a')
     f.write(str(args.wolen) + "\n")
     f.close()
 
-f = open(args.infile, 'r')
+f = open(args.infile[0], 'r')
 fr = f.readlines()
 
 dists = []
@@ -70,11 +73,6 @@ for d in dists:
 
     extralon = longdiff * (extradist / diffdist)
     extralat = latdiff * (extradist / diffdist)
-
-    # print(startdist)
-    # print(d)
-    # print(enddist)
-    # print("")
 
     coords.append([Coordinates(segstartpt.latitude + extralat, segstartpt.longitude + extralon), d/1609.34])
 
